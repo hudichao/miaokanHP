@@ -46,11 +46,11 @@
 
     var x = getUrlParamter("x");
     var y = getUrlParamter("y");
- 
+
     var ua = navigator.userAgent.toLowerCase();
     var isWeixin = ua.indexOf("micromessenger") > -1;
     if (!isWeixin) {
-      var url = "weixin-index.html?"+ "x=" + x + "&y=" + y + "&weixin=true";
+      var url = "index.html?"+ "x=" + x + "&y=" + y + "&weixin=true";
       window.location.replace(url);
     }
 
