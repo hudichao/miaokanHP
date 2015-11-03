@@ -3,7 +3,7 @@
 <head>
   <title>喵看</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
-  <meta name="viewport" content="width=418, height=736,user-scalable=no"/>
+  <meta name="viewport" content="width=418, height=736,, user-scalable=no"/>
 
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="format-detection"content="telephone=no, email=no" />
@@ -44,17 +44,56 @@
       }
     }
 
-    var x = getUrlParamter("x"); //大学
-    var y = getUrlParamter("y"); //海报
+    //var x = getUrlParamter("x");
+    var y = getUrlParamter("y");
 
-    window.location.replace("university/" + x + "/main.html" + "?y=" + y);
+    var ua = navigator.userAgent.toLowerCase();
+    var isWeixin = ua.indexOf("micromessenger") > -1;
 
+    if (!isWeixin) {
+      var url = "main.html?"+ "y=" + y + "&fromWeixin=true";
+      window.location.replace(url);
+    }
 
   </script>
 
 </head>
 <body>
-  
+  <style type="text/css">
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      border: 0;
+    }
+    #wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    #container {
+      position: relative;
+      margin: 0 auto;
+      width: 418px;
+      height: 736px;
+      background-image: url("main-weixin.jpg");
+      background-size: 418px 736px;
+    }
+
+    #main {
+      width: 100%;
+      height: 100%;
+    }
+
+ 
+  </style>
+  <div id="wrapper">
+    <div id="container">
+
+    </div>
+  </di>
+
 
 </body>
 </html>
