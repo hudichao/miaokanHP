@@ -29,6 +29,20 @@
   <meta name="msapplication-tap-highlight" content="no">
 
   <script>
+    function callAjax(url, callback){
+        var xmlhttp;
+        // compatible with IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                callback(xmlhttp.responseText);
+            }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+    }
+
+
     function getUrlParamter(param) {
       var pageUrl = decodeURIComponent(window.location.search.substring(1));
       var urlVariables = pageUrl.split("&");
@@ -42,15 +56,29 @@
         }
       }
     }
-
-    //var x = getUrlParamter("x");
+    var x = getUrlParamter("x");
     var y = getUrlParamter("y");
+    var fromWeixin = getUrlParamter("fromWeixin");
+    var browser;
+    if (fromWeixin) {
+      browser = "fromWeixin";
+    } else {
+      browswer = "normal";
+    }
+
+
+    var BASEURL = "http://115.29.195.14:8080/visitlog/add";
 
     var ua = navigator.userAgent.toLowerCase();
     var isWeixin = ua.indexOf("micromessenger") > -1;
     if (isWeixin) {
-      var url = "main-weixin.html?" + "y=" + y;
+      var url = "main-weixin.html?x=" + x + "&y=" + y;
       window.location.replace(url);
+    } else {
+      var url = BASEURL + "?typeX=" + x + "&typeY=" + y + "&browser=" + browser;
+      callAjax(url, function(res) {
+        //console.log(res);
+      })
     }
 
   </script>
@@ -135,14 +163,27 @@
 
     if (!isAndroid && !isIphone) {
       //alert("请使用手机打开网页！");
-      console.log("约吗？");
     }
 
     function downAndroid() {
+      // if (!isAndroid) {
+      //   return;
+      // }
+      var url = BASEURL + "?typeX=" + x + "&typeY=" + y + "&browser=" + browser + "&download=android";
+      callAjax(url, function(res) {
+        //console.log(res);
+      })
       window.open("http://www.pgyer.com/apiv1/app/install?aId=e5d8abe66de7cf506c99dbdcc5b6f315&_api_key=b9a786a41a489148eead8dac21baa576");
     }
 
     function downIphone() {
+      // if (!isIphone) {
+      //   return;
+      // }
+      var url = BASEURL + "?typeX=" + x + "&typeY=" + y + "&browser=" + browser + "&download=iphone";
+      callAjax(url, function(res) {
+        //console.log(res);
+      })
       window.open("https://appsto.re/cn/thkk8.i");
     }
 

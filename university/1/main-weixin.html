@@ -44,15 +44,35 @@
       }
     }
 
-    //var x = getUrlParamter("x");
+    function callAjax(url, callback){
+        var xmlhttp;
+        // compatible with IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                callback(xmlhttp.responseText);
+            }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+    }
+
+    var x = getUrlParamter("x");
     var y = getUrlParamter("y");
+    var BASEURL = "http://115.29.195.14:8080/visitlog/add";
 
     var ua = navigator.userAgent.toLowerCase();
     var isWeixin = ua.indexOf("micromessenger") > -1;
 
     if (!isWeixin) {
-      var url = "main.html?"+ "y=" + y + "&fromWeixin=true";
+      var url = "main.html?x="+ x + "&y=" + y + "&fromWeixin=true";
       window.location.replace(url);
+    } else {
+      //send x y weixin
+      var url = BASEURL + "?typeX=" + x + "&typeY=" + y + "&browser=" + 'weixin';
+      callAjax(url, function(res) {
+        //console.log(res);
+      })
     }
 
   </script>
