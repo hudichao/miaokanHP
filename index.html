@@ -1,0 +1,154 @@
+
+<html>
+<head>
+  <title>喵看</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+  <meta name="viewport" content="width=418, height=736,, user-scalable=no"/>
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="format-detection"content="telephone=no, email=no" />
+　<meta name="Keywords" content="喵看 miaokan miaokanapp 匿名社交 图片" />
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+
+  <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+  <meta name="HandheldFriendly" content="true">
+  <!-- 微软的老式浏览器 -->
+  <meta name="MobileOptimized" content="320">
+  <!-- uc强制竖屏 -->
+  <meta name="screen-orientation" content="portrait">
+  <!-- QQ强制竖屏 -->
+  <meta name="x5-orientation" content="portrait">
+  <!-- UC强制全屏 -->
+  <meta name="full-screen" content="yes">
+  <!-- QQ强制全屏 -->
+  <meta name="x5-fullscreen" content="true">
+  <!-- UC应用模式 -->
+  <meta name="browsermode" content="application">
+  <!-- QQ应用模式 -->
+  <meta name="x5-page-mode" content="app">
+  <!-- windows phone 点击无高光 -->
+  <meta name="msapplication-tap-highlight" content="no">
+
+  <script>
+    function getUrlParamter(param) {
+      var pageUrl = decodeURIComponent(window.location.search.substring(1));
+      var urlVariables = pageUrl.split("&");
+      var parameterName;
+      var i;
+
+      for (i = 0; i < urlVariables.length; i++) {
+        parameterName = urlVariables[i].split("=");
+        if (parameterName[0] === param) {
+          return parameterName[1];
+        }
+      }
+    }
+
+    var x = getUrlParamter("x");
+    var y = getUrlParamter("y");
+    
+    var ua = navigator.userAgent.toLowerCase();
+    var isWeixin = ua.indexOf("micromessenger") > -1;
+    if (isWeixin) {
+      var url = "weixin-index.html?"+ "x=" + x + "&y=" + y;
+      window.location.replace(url);
+    }
+
+  </script>
+
+</head>
+<body>
+  <style type="text/css">
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      border: 0;
+    }
+
+    a {
+      text-decoration: none!important;
+      color: #FFF;
+    }
+    a:visited {
+      text-decoration: none!important;
+      color: #FFF;
+    }
+
+    #wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    #container {
+      position: relative;
+      margin: 0 auto;
+      width: 418px;
+      height: 736px;
+      background-image: url("main.jpg");
+      background-size: 418px 736px;
+    }
+
+    #main {
+      width: 100%;
+      height: 100%;
+    }
+
+    #android, #iphone {
+      display: inline-block;
+      width: 256px;
+      height: 48px;
+      line-height: 48px;
+      text-align: center;
+      font-size: 16px;
+      color: #FFF;
+      font-family: Microsoft YaHei;
+      background:transparent;
+    }
+
+    #android {
+      position: absolute;
+      top: 534px;
+      left: 83px;
+
+    }
+
+    #iphone {
+      position: absolute;
+      top: 593px;
+      left: 83px;
+
+    }
+  </style>
+  <div id="wrapper">
+    <div id="container">
+      <div id="main">
+        <div id="android" onclick="downAndroid()"></div>
+        <div id="iphone" onclick="downIphone()"><a href="" onclick="downIphone"></a></div>
+      </div>
+    </div>
+  </di>
+  <script type="text/javascript">
+    var ua = navigator.userAgent.toLowerCase();
+    var isAndroid = ua.indexOf("android") > -1;
+    var isIphone = /iPhone|iPod/.test(navigator.platform);;
+
+    if (!isAndroid && !isIphone) {
+      //alert("请使用手机打开网页！");
+      console.log("约吗？");
+    }
+
+    function downAndroid() {
+      window.open("http://www.pgyer.com/apiv1/app/install?aId=e5d8abe66de7cf506c99dbdcc5b6f315&_api_key=b9a786a41a489148eead8dac21baa576");
+    }
+
+    function downIphone() {
+      window.open("https://appsto.re/cn/thkk8.i");
+    }
+
+
+  </script>
+
+</body>
+</html>
