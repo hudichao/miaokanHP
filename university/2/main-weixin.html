@@ -1,3 +1,4 @@
+
 <html>
 <head>
   <title>喵看</title>
@@ -31,20 +32,6 @@
   <script>
     var isDebugging = (window.location.hostname === 'localhost' || window.location.port === '8000');
     var t = 2;
-    function callAjax(url, callback){
-        if (isDebugging) return;
-        var xmlhttp;
-        // compatible with IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function(){
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
-                callback(xmlhttp.responseText);
-            }
-        }
-        xmlhttp.open("GET", url, true);
-        xmlhttp.send();
-    }
-
 
     function getUrlParamter(param) {
       var pageUrl = decodeURIComponent(window.location.search.substring(1));
@@ -59,28 +46,34 @@
         }
       }
     }
-    var x = getUrlParamter("x");
-    var y = getUrlParamter("y");
-    var fromWeixin = getUrlParamter("fromWeixin");
-    var browser;
 
-    if (fromWeixin) {
-      browser = "fromWeixin";
-    } else {
-      browser = "normal";
+    function callAjax(url, callback){
+      if (isDebugging) return;
+
+        var xmlhttp;
+        // compatible with IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                callback(xmlhttp.responseText);
+            }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
     }
 
-
+    var x = getUrlParamter("x");
+    var y = getUrlParamter("y");
     var BASEURL = "http://115.29.195.14:8080/visitlog/add";
 
     var ua = navigator.userAgent.toLowerCase();
     var isWeixin = ua.indexOf("micromessenger") > -1;
-
-    if (isWeixin) {
-      var url = "main-weixin.html?x=" + x + "&y=" + y + "&t=" + t;
+    if (!isWeixin) {
+      var url = "main.html?x="+ x + "&y=" + y + "&fromWeixin=true" + "&t=" + t;
       window.location.replace(url);
     } else {
-      var url = BASEURL + "?typeX=" + x + "&typeY=" + y + "&browser=" + browser + "&t=" + t;
+      //send x y weixin
+      var url = BASEURL + "?typeX=" + x + "&typeY=" + y + "&browser=" + 'weixin';
       callAjax(url, function(res) {
         //console.log(res);
       })
@@ -142,6 +135,7 @@
       background:transparent;
       background-color: #050505;
       border-radius: 30px;
+      font-weight: bold;
     }
 
     #android {
@@ -265,60 +259,28 @@
   <div id="wrapper">
     <div id="container">
       <div id="main">
-   <!--      <div id="weixin">
+        <div id="weixin">
           <div class="topLeft"></div>
           <div>同学，下载app请点击右上角<br>按钮选择【在浏览器中打开】</div>
           <i class="arrow"></i>
-        </div> -->
+        </div>
         <div id="badge">
           
         </div>
         <div id="name">
-          <span class="title">杭州职业技术学院</span>
+          <span class="title">浙江理工大学</span>
           <span class="subtitle">校内真实照片分享App 「喵看」</span>
         </div>
-        <div id="android"  onclick="downAndroid()">
+<!--         <div id="android"  onclick="downAndroid()">
           <i class="android-icon"></i><span>Andriod 下载</span>
         </div>
         <div id="iphone" onclick="downIphone()">
             <i class="android-icon"></i><span>App Store 下载</span>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
-  <script type="text/javascript">
-    var ua = navigator.userAgent.toLowerCase();
-    var isAndroid = ua.indexOf("android") > -1;
-    var isIphone = /iPhone|iPod/.test(navigator.platform);;
 
-    if (!isAndroid && !isIphone) {
-      //alert("请使用手机打开网页！");
-    }
-
-    function downAndroid() {
-      // if (!isAndroid) {
-      //   return;
-      // }
-      var url = BASEURL + "?typeX=" + x + "&typeY=" + y + "&browser=" + browser + "&download=android";
-      callAjax(url, function(res) {
-        //console.log(res);
-      })
-      window.open("http://www.pgyer.com/apiv1/app/install?aId=e5d8abe66de7cf506c99dbdcc5b6f315&_api_key=b9a786a41a489148eead8dac21baa576");
-    }
-
-    function downIphone() {
-      // if (!isIphone) {
-      //   return;
-      // }
-      var url = BASEURL + "?typeX=" + x + "&typeY=" + y + "&browser=" + browser + "&download=iphone";
-      callAjax(url, function(res) {
-        //console.log(res);
-      })
-      window.open("https://appsto.re/cn/thkk8.i");
-    }
-
-
-  </script>
 
 </body>
 </html>
